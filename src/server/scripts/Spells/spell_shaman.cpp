@@ -208,6 +208,50 @@ class spell_sha_bloodlust : public SpellScriptLoader
         }
 };
 
+// Fulmination
+class spell_sha_fulmination : public SpellScriptLoader
+{
+public:
+	spell_sha_fulmination() : SpellScriptLoader("spell_sha_fulmination") { }
+
+	class spell_sha_fulmination_SpellScript : public SpellScript
+	{
+		PrepareSpellScript(spell_sha_fulmination_SpellScript);
+
+		void HandleOnHit()
+		{
+			Unit* caster = GetCaster();
+			if (AuraEffect* fulmination = caster->GetDummyAuraEffect(SPELLFAMILY_SHAMAN, 2010, EFFECT_0))
+				if (Aura* lShield = caster->GetAura(324, caster->GetGUID()))
+					if (lShield->GetCharges() > fulmination->GetAmount())
+			        {
+				        uint8 charges = lShield->GetCharges() - fulmination->GetAmount();
+				        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(lShield->GetSpellInfo()->Effects[EFFECT_0].TriggerSpell);
+
+				        int32 bonus = caster->SpellBaseDamageBonusDone(spellInfo->GetSchoolMask()) * 0.267f;
+				        int32 basepoints0 = spellInfo->Effects[EFFECT_0].CalcValue(caster) + bonus;
+				        if (Player* modOwner = caster->GetSpellModOwner())
+					    modOwner->ApplySpellMod(spellInfo->Id, SPELLMOD_DAMAGE, basepoints0);
+
+				        basepoints0 *= charges;
+				        caster->CastCustomSpell(GetHitUnit(), 88767, &basepoints0, NULL, NULL, true);
+				        caster->RemoveAurasDueToSpell(95774);
+				        lShield->SetCharges(fulmination->GetAmount());
+					}
+		}
+
+		void Register()
+		{
+			OnHit += SpellHitFn(spell_sha_fulmination_SpellScript::HandleOnHit);
+		}
+	};
+
+	SpellScript* GetSpellScript() const override
+	{
+		return new spell_sha_fulmination_SpellScript();
+	}
+};
+
 // 1064 - Chain Heal
 /// Updated 4.3.4
 class spell_sha_chain_heal : public SpellScriptLoader
@@ -1235,6 +1279,7 @@ void AddSC_shaman_spell_scripts()
     new spell_sha_ancestral_awakening();
     new spell_sha_ancestral_awakening_proc();
     new spell_sha_bloodlust();
+    new spell_sha_fulmination;
     new spell_sha_chain_heal();
     new spell_sha_earth_shield();
     new spell_sha_earthbind_totem();
