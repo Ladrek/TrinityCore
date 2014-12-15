@@ -3343,6 +3343,18 @@ void SpellMgr::LoadSpellInfoCorrections()
                 break;
             // ULDUAR SPELLS
             //
+            case 92315:
+                spellInfo->Effects[EFFECT_0].ApplyAuraName = SPELL_EFFECT_DUMMY;
+				break;
+            case 1856:
+                spellInfo->Effects[0].Effect = SPELL_EFFECT_SANCTUARY;
+                break;
+            case 51755:
+                spellInfo->AuraInterruptFlags = AURA_INTERRUPT_FLAG_TAKE_DAMAGE | AURA_INTERRUPT_FLAG_CAST | AURA_INTERRUPT_FLAG_TALK | AURA_INTERRUPT_FLAG_MELEE_ATTACK |AURA_INTERRUPT_FLAG_MOUNT;
+                spellInfo->Effects[0].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_PET);
+                spellInfo->Effects[1].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_PET);
+                spellInfo->Effects[2].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_PET);
+                break;
             case 62374: // Pursued (Flame Leviathan)
                 spellInfo->Effects[EFFECT_0].RadiusEntry = sSpellRadiusStore.LookupEntry(EFFECT_RADIUS_50000_YARDS);   // 50000yd
                 break;
@@ -3748,6 +3760,60 @@ void SpellMgr::LoadSpellInfoCorrections()
                 break;
             // ISLE OF CONQUEST SPELLS
             //
+            case 88448:
+                spellInfo->RecoveryTime = 0;
+                break;
+            case 77782:
+                spellInfo->Effects[EFFECT_0].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
+                spellInfo->Effects[EFFECT_0].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ENTRY);
+                break;
+            case 78100:
+            case 92407:
+            case 92408:
+            case 92409:
+                spellInfo->Effects[EFFECT_0].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
+                spellInfo->Effects[EFFECT_0].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ENEMY);
+                spellInfo->Effects[EFFECT_1].TargetA = SpellImplicitTargetInfo(TARGET_SRC_CASTER);
+                spellInfo->Effects[EFFECT_1].TargetB = SpellImplicitTargetInfo(TARGET_UNIT_SRC_AREA_ENEMY);
+                break;
+            case 34490:
+                spellInfo->Speed = 0.0f;
+                break;
+            case 93099:
+                spellInfo->SpellFamilyName = SPELLFAMILY_DEATHKNIGHT;
+                break;
+            case 65142:
+                spellInfo->Effects[EFFECT_1].Effect = SPELL_EFFECT_APPLY_AURA;
+                spellInfo->Effects[EFFECT_1].ApplyAuraName = SPELL_AURA_MOD_DAMAGE_PERCENT_TAKEN;
+                spellInfo->Effects[EFFECT_1].MiscValue = 126;
+                spellInfo->Effects[EFFECT_1].TriggerSpell = 0;
+                break;
+            case 81208:
+                spellInfo->Effects[EFFECT_1].TriggerSpell = 81585;
+                break;
+            case 49224:
+            case 49611:
+                spellInfo->ProcCharges = 0;
+                break;
+            case 84570:
+            case 84571:
+            case 84572:
+                spellInfo->Effects[EFFECT_0].SpellClassMask[1] |= 0x8000100;
+                break;
+            case 100048:
+                spellInfo->Effects[0].RadiusEntry = sSpellRadiusStore.LookupEntry(EFFECT_RADIUS_200_YARDS);
+                break;
+            case 14179:
+            case 58422:
+            case 58423:
+                spellInfo->Effects[EFFECT_0].SpellClassMask[1] |= 0x00000008;
+                break;
+            case 96438:
+                spellInfo->AttributesEx4 = 0;
+                break;
+            case 54278:
+                spellInfo->Effects[EFFECT_0].SpellClassMask[0] = 0x000001000; // Proc from Fireball.
+                break;
             case 66551: // Teleport
                 spellInfo->RangeEntry = sSpellRangeStore.LookupEntry(13); // 50000yd
                 break;
