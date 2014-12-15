@@ -1279,7 +1279,7 @@ void AddSC_shaman_spell_scripts()
     new spell_sha_ancestral_awakening();
     new spell_sha_ancestral_awakening_proc();
     new spell_sha_bloodlust();
-    new spell_sha_fulmination;
+    new spell_sha_fulmination();
     new spell_sha_chain_heal();
     new spell_sha_earth_shield();
     new spell_sha_earthbind_totem();
